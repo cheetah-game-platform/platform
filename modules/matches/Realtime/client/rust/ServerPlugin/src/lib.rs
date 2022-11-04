@@ -1,2 +1,3 @@
-// pub mod ffi;
-// pub mod registry;
+pub mod ffi;
+pub mod proto;
+pub mod registry;
