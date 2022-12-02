@@ -1,5 +1,6 @@
 syntax = "proto3";
 package cheetah.matches.realtime.internal;
+option csharp_namespace = "Cheetah.Matches.Realtime.GRPC.Internal";
 
 import public "matches.realtime.shared.proto";
 

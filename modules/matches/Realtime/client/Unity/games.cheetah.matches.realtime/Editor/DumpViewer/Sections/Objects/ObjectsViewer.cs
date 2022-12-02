@@ -5,11 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Cheetah.Matches.Realtime.Editor.DumpViewer.Sections.Objects.Query;
 using Cheetah.Matches.Realtime.Editor.DumpViewer.TypesExtension;
-using Cheetah.Matches.Realtime.Editor.GRPC;
 using Cheetah.Matches.Realtime.Editor.UIElements.HistoryTextField;
 using Cheetah.Matches.Realtime.Editor.UIElements.StatusIndicator;
 using Cheetah.Matches.Realtime.Editor.UIElements.Table;
-using Cheetah.Matches.Realtime.Shared.GRPC;
+using Cheetah.Matches.Realtime.GRPC.Admin;
+using Cheetah.Matches.Realtime.GRPC.Shared;
 using UnityEditor;
 using UnityEngine.UIElements;
 

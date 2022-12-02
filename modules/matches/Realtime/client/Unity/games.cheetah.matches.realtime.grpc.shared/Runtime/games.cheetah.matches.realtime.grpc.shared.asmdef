@@ -1,6 +1,6 @@
 {
-  "name": "games.cheetah.matches.realtime.shared",
-  "rootNamespace": "Cheetah.Matches.Realtime.Shared",
+  "name": "games.cheetah.matches.realtime.grpc.shared",
+  "rootNamespace": "Cheetah.Matches.Realtime.GRPC.Shared",
   "references": [
   ],
   "allowUnsafeCode": true,

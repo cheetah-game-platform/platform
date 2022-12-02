@@ -1,6 +1,6 @@
 using Cheetah.Matches.Realtime.Editor.DumpViewer.TypesExtension;
-using Cheetah.Matches.Realtime.Editor.GRPC;
 using Cheetah.Matches.Realtime.Editor.UIElements.Table;
+using Cheetah.Matches.Realtime.GRPC.Admin;
 
 namespace Cheetah.Matches.Realtime.Editor.DumpViewer.Sections
 {

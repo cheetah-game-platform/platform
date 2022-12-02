@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Cheetah.Matches.Realtime.Editor.GRPC;
+using Cheetah.Matches.Realtime.GRPC.Admin;
 using Cheetah.Platform;
 using UnityEditor;
 

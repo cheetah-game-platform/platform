@@ -6,9 +6,11 @@
     "UnityEditor.TestRunner",
     "UnityEngine",
     "games.cheetah.matches.realtime",
-    "games.cheetah.matches.realtime.shared",
+    "games.cheetah.matches.realtime.grpc.admin",
+    "games.cheetah.matches.realtime.grpc.shared",
     "games.cheetah.matches.realtime.editor",
-    "games.cheetah.platform"
+    "games.cheetah.platform",
+    "Shared"
   ],
   "includePlatforms": [
     "Editor"

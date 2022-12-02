@@ -1,0 +1,16 @@
+{
+  "name": "games.cheetah.matches.realtime.grpc.admin",
+  "rootNamespace": "Cheetah.Matches.Realtime.GRPC.Admin",
+  "references": [
+    "games.cheetah.matches.realtime.grpc.shared"
+  ],
+  "allowUnsafeCode": true,
+  "overrideReferences": false,
+  "precompiledReferences": [
+    ""
+  ],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

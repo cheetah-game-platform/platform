@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cheetah.Matches.Realtime.Editor.GRPC;
+using Cheetah.Matches.Realtime.GRPC.Admin;
 using UnityEditor;
 
 namespace Cheetah.Matches.Realtime.Editor.NetworkCommandsViewer.UI

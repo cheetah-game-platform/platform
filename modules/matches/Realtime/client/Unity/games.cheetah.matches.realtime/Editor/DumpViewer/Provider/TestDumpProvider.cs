@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Cheetah.Matches.Realtime.Editor.GRPC;
-using Cheetah.Matches.Realtime.Shared.GRPC;
+using Cheetah.Matches.Realtime.GRPC.Admin;
+using Cheetah.Matches.Realtime.GRPC.Shared;
 using Google.Protobuf;
 
 namespace Cheetah.Matches.Realtime.Editor.DumpViewer.Provider
@@ -142,7 +142,6 @@ namespace Cheetah.Matches.Realtime.Editor.DumpViewer.Provider
                         Double = random.NextDouble()
                     }
                 });
-
             }
         }
     }

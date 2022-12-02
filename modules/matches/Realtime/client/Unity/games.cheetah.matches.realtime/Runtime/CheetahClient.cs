@@ -29,17 +29,21 @@ namespace Cheetah.Matches.Realtime
             LoggerGateway.Init();
         }
 
-        public CheetahClient(string host, uint port, uint memberId, ulong roomId, byte[] privateUserKey, CodecRegistry codecRegistry)
+
+        public CheetahClient(string address, uint memberId, ulong roomId, byte[] privateUserKey, CodecRegistry codecRegistry)
         {
-            LoggerGateway.CollectLogs(false);// очищаем логи с предыдущего клиента
+            LoggerGateway.CollectLogs(false); // очищаем логи с предыдущего клиента
             CodecRegistry = codecRegistry;
             var userPrivateKey = new CheetahBuffer(privateUserKey);
-            ResultChecker.Check(ClientFFI.CreateClient($"{host}:{port}", (ushort)memberId, roomId, ref userPrivateKey, 0, out Id));
+            ResultChecker.Check(ClientFFI.CreateClient(address, (ushort)memberId, roomId, ref userPrivateKey, 0, out Id));
             objectsCreateInfo = GetPlugin<CheetahObjectsCreateInfo>();
-            
         }
 
-        
+        public CheetahClient(string host, uint port, uint memberId, ulong roomId, byte[] privateUserKey, CodecRegistry codecRegistry)
+            : this($"{host}:{port}", memberId, roomId, privateUserKey, codecRegistry)
+        {
+        }
+
         /// <summary>
         /// Отключить клиентские логи
         /// </summary>
@@ -61,13 +65,13 @@ namespace Cheetah.Matches.Realtime
 
         public CheetahClientConnectionStatus GetConnectionStatus()
         {
-            ResultChecker.Check(ClientFFI.GetConnectionStatus(Id,out var connectionStatus));
+            ResultChecker.Check(ClientFFI.GetConnectionStatus(Id, out var connectionStatus));
             return connectionStatus;
         }
-        
+
         public CheetahClientStatistics GetStatistics()
         {
-            ResultChecker.Check(ClientFFI.GetStatistics(Id,out var statistics));
+            ResultChecker.Check(ClientFFI.GetStatistics(Id, out var statistics));
             return statistics;
         }
 
@@ -77,13 +81,13 @@ namespace Cheetah.Matches.Realtime
             {
                 return (T)plugin;
             }
-            
+
             var newPlugin = new T();
             newPlugin.Init(this);
             plugins.Add(typeof(T), newPlugin);
             return newPlugin;
         }
-        
+
 
         /// <summary>
         /// Создать объект, принадлежащий пользователю
@@ -92,7 +96,7 @@ namespace Cheetah.Matches.Realtime
         {
             return new CheetahObjectBuilder(template, accessGroup, objectsCreateInfo, this);
         }
-        
+
         public void OnException(Exception e)
         {
             Debug.LogException(e);
@@ -137,8 +141,8 @@ namespace Cheetah.Matches.Realtime
 
             return time;
         }
-        
-        
+
+
         /// <summary>
         /// Установить канал отправки все последующих команд
         /// </summary>
@@ -146,15 +150,16 @@ namespace Cheetah.Matches.Realtime
         /// <param name="group">группа, для групповых каналов, для остальных игнорируется</param>
         public void SetChannelType(ChannelType channelType, byte group)
         {
-            if ( currentChannelType == channelType && currentChannelGroup == group)
+            if (currentChannelType == channelType && currentChannelGroup == group)
             {
                 return;
             }
+
             currentChannelType = channelType;
             currentChannelGroup = group;
             ResultChecker.Check(ClientFFI.SetChannelType(Id, channelType, group));
         }
-        
+
 
         /// <summary>
         /// Сброс эмуляции параметров сети
@@ -163,23 +168,23 @@ namespace Cheetah.Matches.Realtime
         {
             ResultChecker.Check(ClientFFI.ResetEmulation(Id));
         }
-        
+
         /// <summary>
         /// Задать параметры эмуляции RTT
         /// Подробнее смотрите в документации проекта
         /// </summary>
         public void SetRttEmulation(ulong rttInMs, double rttDispersion)
         {
-            ResultChecker.Check(ClientFFI.SetRttEmulation(Id,rttInMs, rttDispersion));
+            ResultChecker.Check(ClientFFI.SetRttEmulation(Id, rttInMs, rttDispersion));
         }
-        
+
         /// <summary>
         /// Задать параметры эмуляции потери пакетов
         /// Подробнее смотрите в документации проекта
         /// </summary>
         public void SetDropEmulation(double dropProbability, ulong dropTimeInMs)
         {
-            ResultChecker.Check(ClientFFI.SetDropEmulation(Id,dropProbability, dropTimeInMs));
+            ResultChecker.Check(ClientFFI.SetDropEmulation(Id, dropProbability, dropTimeInMs));
         }
     }
 

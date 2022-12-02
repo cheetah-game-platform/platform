@@ -1,6 +1,6 @@
 syntax = "proto3";
 package cheetah.matches.realtime.admin;
-option csharp_namespace = "Cheetah.Matches.Realtime.Editor.GRPC";
+option csharp_namespace = "Cheetah.Matches.Realtime.GRPC.Admin";
 
 import public "matches.realtime.shared.proto";
 /**

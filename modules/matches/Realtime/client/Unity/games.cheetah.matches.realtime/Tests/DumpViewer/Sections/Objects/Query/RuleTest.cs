@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Cheetah.Matches.Realtime.Editor.DumpViewer.Sections.Objects;
 using Cheetah.Matches.Realtime.Editor.DumpViewer.Sections.Objects.Query;
-using Cheetah.Matches.Realtime.Editor.GRPC;
-using Cheetah.Matches.Realtime.Shared.GRPC;
+using Cheetah.Matches.Realtime.GRPC.Admin;
+using Cheetah.Matches.Realtime.GRPC.Shared;
 using Google.Protobuf;
 using NUnit.Framework;
 

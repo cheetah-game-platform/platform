@@ -1,12 +1,13 @@
 {
-  "name": "games.cheetah.matches.realtime.shared",
+  "name": "games.cheetah.matches.realtime.grpc.admin",
   "version": "999.999.999",
-  "displayName": "games.cheetah.realtime.shared",
+  "displayName": "games.cheetah.matches.realtime.grpc.admin",
   "description": "Shared library for relay server",
   "unity": "2019.1",
   "unityRelease": "0b5",
   "dependencies": {
-    "games.cheetah.platform": "999.999.999"
+    "games.cheetah.platform": "999.999.999",
+    "games.cheetah.matches.realtime.grpc.shared": "999.999.999"
   },
   "repository": "github:cheetah-game-platform/platform",
   "hideInEditor": false,

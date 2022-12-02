@@ -141,7 +141,8 @@
       "depth": 0,
       "source": "local",
       "dependencies": {
-        "games.cheetah.platform": "999.999.999"
+        "games.cheetah.platform": "999.999.999",
+        "games.cheetah.matches.realtime.grpc.admin": "999.999.999"
       }
     },
     "games.cheetah.matches.realtime.doa": {
@@ -162,20 +163,40 @@
         "games.cheetah.matches.realtime": "999.999.999"
       }
     },
-    "games.cheetah.matches.realtime.shared": {
-      "version": "file:../../../modules/matches/Realtime/client/Unity/games.cheetah.matches.realtime.shared",
+    "games.cheetah.matches.realtime.grpc.admin": {
+      "version": "file:../../../modules/matches/Realtime/client/Unity/games.cheetah.matches.realtime.grpc.admin",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "games.cheetah.platform": "999.999.999",
+        "games.cheetah.matches.realtime.grpc.shared": "999.999.999"
+      }
+    },
+    "games.cheetah.matches.realtime.grpc.internal": {
+      "version": "file:../../../modules/matches/Realtime/client/Unity/games.cheetah.matches.realtime.grpc.internal",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "games.cheetah.platform": "999.999.999",
+        "games.cheetah.matches.realtime.grpc.shared": "999.999.999"
+      }
+    },
+    "games.cheetah.matches.realtime.grpc.shared": {
+      "version": "file:../../../modules/matches/Realtime/client/Unity/games.cheetah.matches.realtime.grpc.shared",
       "depth": 0,
       "source": "local",
       "dependencies": {
         "games.cheetah.platform": "999.999.999"
       }
     },
-    "games.cheetah.matches.realtime.uds": {
-      "version": "file:../../../modules/matches/Realtime/client/Unity/games.cheetah.matches.realtime.uds",
+    "games.cheetah.matches.realtime.plugin": {
+      "version": "file:../../../modules/matches/Realtime/client/Unity/games.cheetah.matches.realtime.plugin",
       "depth": 0,
       "source": "local",
       "dependencies": {
-        "games.cheetah.platform": "999.999.999"
+        "games.cheetah.platform": "999.999.999",
+        "games.cheetah.matches.realtime": "999.999.999",
+        "games.cheetah.matches.realtime.grpc.internal": "999.999.999"
       }
     },
     "games.cheetah.platform": {

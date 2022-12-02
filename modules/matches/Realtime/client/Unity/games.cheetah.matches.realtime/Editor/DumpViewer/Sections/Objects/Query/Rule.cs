@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Cheetah.Matches.Realtime.Editor.GRPC;
+using Cheetah.Matches.Realtime.GRPC.Admin;
 
 namespace Cheetah.Matches.Realtime.Editor.DumpViewer.Sections.Objects.Query
 {
