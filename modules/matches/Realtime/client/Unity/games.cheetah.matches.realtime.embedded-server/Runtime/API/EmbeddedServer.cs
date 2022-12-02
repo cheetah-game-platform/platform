@@ -1,4 +1,3 @@
-
 using System;
 using System.Net;
 using Cheetah.Matches.Realtime.EmbeddedServer.FFI;
@@ -6,6 +5,7 @@ using Cheetah.Matches.Realtime.EmbeddedServer.Impl;
 #if UNITY_5_3_OR_NEWER
 using AOT;
 using UnityEngine;
+
 #else
 using Serilog;
 #endif
@@ -76,12 +76,12 @@ namespace Cheetah.Matches.Realtime.EmbeddedServer.API
             }
         }
 
-        public string GetAdminGrpcIp()
+        public string GetAdminWebGrpcIp()
         {
             unsafe
             {
                 return
-                    $"{description.admin_grpc_ip[0]}.{description.admin_grpc_ip[1]}.{description.admin_grpc_ip[2]}.{description.admin_grpc_ip[3]}";
+                    $"{description.admin_webgrpc_ip[0]}.{description.admin_webgrpc_ip[1]}.{description.admin_webgrpc_ip[2]}.{description.admin_webgrpc_ip[3]}";
             }
         }
 
@@ -94,19 +94,33 @@ namespace Cheetah.Matches.Realtime.EmbeddedServer.API
             }
         }
 
+        public string GetInternalWebGrpcIp()
+        {
+            unsafe
+            {
+                return
+                    $"{description.internal_webgrpc_ip[0]}.{description.internal_webgrpc_ip[1]}.{description.internal_webgrpc_ip[2]}.{description.internal_webgrpc_ip[3]}";
+            }
+        }
+
         public uint GetGamePort()
         {
             return description.gamePort;
         }
 
-        public uint GetAdminGrpcPort()
+        public uint GetAdminWebGrpcPort()
         {
-            return description.admin_grpc_port;
+            return description.admin_webgrpc_port;
         }
 
         public uint GetInternalGrpcPort()
         {
             return description.internal_grpc_port;
+        }
+
+        public uint GetInternalWebGrpcPort()
+        {
+            return description.internal_webgrpc_port;
         }
 
 #if UNITY_5_3_OR_NEWER
@@ -123,7 +137,7 @@ namespace Cheetah.Matches.Realtime.EmbeddedServer.API
             FFI.Logger.InitLogger();
             FFI.Logger.SetMaxLogLevel(emeddedServerLogLevel);
         }
-        
+
         public static void ShowCurrentLogs()
         {
             FFI.Logger.CollectLogs(ShowLog);

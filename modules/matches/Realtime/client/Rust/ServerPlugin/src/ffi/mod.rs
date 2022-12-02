@@ -68,6 +68,21 @@ pub unsafe extern "C" fn pop_room_event(plugin_id: ServerPluginId, out: &mut Roo
 	})
 }
 
+pub struct NativeString {
+	pub len: u8,
+	pub buffer: [u8; 255],
+}
+
+#[no_mangle]
+#[allow(clippy::cast_possible_truncation)]
+pub extern "C" fn get_last_error_msg(buffer: &mut NativeString) {
+	let msg = LAST_ERROR.lock().unwrap();
+	let msg = msg.as_bytes();
+	let length = msg.len();
+	buffer.len = length as u8;
+	buffer.buffer[0..length].copy_from_slice(msg);
+}
+
 pub fn execute<F, E: Display>(body: F) -> ResultCode
 where
 	F: FnOnce(&mut Registry) -> Result<ResultCode, E>,

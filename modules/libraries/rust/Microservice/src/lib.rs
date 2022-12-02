@@ -1,7 +1,5 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
-pub mod trace;
-
 use std::collections::HashMap;
 use std::net::SocketAddr;
 use std::thread::sleep;
@@ -15,6 +13,8 @@ use tracing_loki_layer::LokiLayer;
 use tracing_subscriber::filter::Directive;
 use tracing_subscriber::layer::SubscriberExt;
 pub use tracing_subscriber::{fmt, EnvFilter, Layer, Registry};
+
+pub mod trace;
 
 pub type StringId = heapless::String<20>;
 
@@ -77,32 +77,40 @@ fn setup_panic_hook() {
 }
 
 #[must_use]
-pub fn get_internal_service_binding_addr() -> SocketAddr {
-	format!("0.0.0.0:{}", get_internal_service_port()).parse().unwrap()
+pub fn get_internal_grpc_service_default_address() -> SocketAddr {
+	format!("0.0.0.0:{}", get_internal_grpc_service_default_port()).parse().unwrap()
 }
 
 #[must_use]
-pub fn get_external_service_binding_addr() -> SocketAddr {
-	format!("0.0.0.0:{}", get_external_service_port()).parse().unwrap()
+pub fn get_internal_webgrpc_service_default_address() -> SocketAddr {
+	format!("0.0.0.0:{}", get_internal_webgrpc_service_default_port()).parse().unwrap()
 }
 
 #[must_use]
-pub fn get_admin_service_binding_addr() -> SocketAddr {
-	format!("0.0.0.0:{}", get_admin_service_port()).parse().unwrap()
+pub fn get_public_htt11_service_binding_addr() -> SocketAddr {
+	format!("0.0.0.0:{}", get_public_grpc_service_default_port()).parse().unwrap()
 }
 
 #[must_use]
-pub fn get_external_service_port() -> u16 {
+pub fn get_admin_webgrpc_service_default_address() -> SocketAddr {
+	format!("0.0.0.0:{}", get_admin_webgrpc_service_default_port()).parse().unwrap()
+}
+
+#[must_use]
+pub fn get_public_grpc_service_default_port() -> u16 {
 	5000
 }
-
 #[must_use]
-pub fn get_internal_service_port() -> u16 {
+pub fn get_internal_grpc_service_default_port() -> u16 {
 	5001
+}
+#[must_use]
+pub fn get_internal_webgrpc_service_default_port() -> u16 {
+	6001
 }
 
 #[must_use]
-pub fn get_admin_service_port() -> u16 {
+pub fn get_admin_webgrpc_service_default_port() -> u16 {
 	5002
 }
 

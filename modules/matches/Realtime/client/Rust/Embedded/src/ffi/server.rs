@@ -7,12 +7,14 @@ use crate::EmbeddedServerWrapper;
 #[repr(C)]
 pub struct EmbeddedServerDescription {
 	pub(crate) id: ServerId,
-	game_host: [u8; 4],
+	game_ip: [u8; 4],
 	game_port: u16,
-	internal_grpc_host: [u8; 4],
+	internal_grpc_ip: [u8; 4],
 	internal_grpc_port: u16,
-	admin_grpc_host: [u8; 4],
-	admin_grpc_port: u16,
+	internal_webgrpc_ip: [u8; 4],
+	internal_webgrpc_port: u16,
+	admin_webgrpc_ip: [u8; 4],
+	admin_webgrpc_port: u16,
 }
 
 #[no_mangle]
@@ -25,16 +27,18 @@ pub extern "C" fn run_new_server(result: &mut EmbeddedServerDescription, on_erro
 		Ok(server) => {
 			result.id = server_id;
 
-			if !set_addr(&mut result.game_host, on_error, &server.game_socket_addr.ip())
-				|| !set_addr(&mut result.internal_grpc_host, on_error, &server.internal_grpc_socket_addr.ip())
-				|| !set_addr(&mut result.admin_grpc_host, on_error, &server.admin_grpc_socket_addr.ip())
+			if !set_addr(&mut result.game_ip, on_error, &server.game_socket_addr.ip())
+				|| !set_addr(&mut result.internal_grpc_ip, on_error, &server.internal_grpc_socket_addr.ip())
+				|| !set_addr(&mut result.internal_webgrpc_ip, on_error, &server.internal_webgrpc_socket_addr.ip())
+				|| !set_addr(&mut result.admin_webgrpc_ip, on_error, &server.admin_webgrpc_socket_addr.ip())
 			{
 				return false;
 			}
 
 			result.game_port = server.game_socket_addr.port();
 			result.internal_grpc_port = server.internal_grpc_socket_addr.port();
-			result.admin_grpc_port = server.admin_grpc_socket_addr.port();
+			result.internal_webgrpc_port = server.internal_webgrpc_socket_addr.port();
+			result.admin_webgrpc_port = server.admin_webgrpc_socket_addr.port();
 			registry.servers.insert(server_id, server);
 			true
 		}

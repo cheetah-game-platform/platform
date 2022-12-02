@@ -1,14 +1,16 @@
-use cheetah_matches_realtime::builder::ServerBuilder;
 use fnv::FnvHashSet;
+
+use cheetah_matches_realtime::builder::ServerBuilder;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
 	cheetah_libraries_microservice::init("matches.relay");
 
 	let mut builder = ServerBuilder::default()
-		.set_admin_grpc_address(cheetah_libraries_microservice::get_admin_service_binding_addr())
-		.set_internal_grpc_address(cheetah_libraries_microservice::get_internal_service_binding_addr())
-		.set_game_address("0.0.0.0:5555".parse().unwrap())
+		.set_admin_webgrpc_service_bind_address(cheetah_libraries_microservice::get_admin_webgrpc_service_default_address())
+		.set_internal_grpc_service_bind_address(cheetah_libraries_microservice::get_internal_grpc_service_default_address())
+		.set_internal_webgrpc_service_bind_address(cheetah_libraries_microservice::get_internal_webgrpc_service_default_address())
+		.set_games_service_bind_address("0.0.0.0:5555".parse().unwrap())
 		.set_plugin_names(get_plugin_names("PLUGIN_NAMES"));
 
 	if std::env::var("ENABLE_AGONES").is_ok() {
@@ -31,10 +33,12 @@ fn get_plugin_names(env_var: &str) -> FnvHashSet<String> {
 
 #[cfg(test)]
 mod tests {
-	use crate::get_plugin_names;
+	use std::env;
+
 	use fnv::FnvHashSet;
 	use rand::distributions::{Alphanumeric, DistString};
-	use std::env;
+
+	use crate::get_plugin_names;
 
 	#[test]
 	fn test_get_plugin_names() {

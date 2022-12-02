@@ -1,9 +1,9 @@
-use fnv::FnvHashSet;
 use std::io;
 use std::net::{SocketAddr, UdpSocket};
 use std::str::FromStr;
 use std::sync::Arc;
 
+use fnv::FnvHashSet;
 use thiserror::Error;
 use tokio::net::TcpListener;
 use tokio::sync::Mutex;
@@ -17,8 +17,9 @@ use crate::{RoomsServerManager, RoomsServerManagerError, Server};
 ///
 pub struct ServerBuilder {
 	game_bind_addr: SocketAddr,
-	admin_grpc_bind_addr: SocketAddr,
-	internal_grpc_bind_addr: SocketAddr,
+	admin_webgrpc_service_bind_address: SocketAddr,
+	internal_grpc_service_bind_address: SocketAddr,
+	internal_webgrpc_service_bind_address: SocketAddr,
 	is_agones_enabled: bool,
 	plugin_names: FnvHashSet<String>,
 }
@@ -27,8 +28,9 @@ impl Default for ServerBuilder {
 	fn default() -> Self {
 		Self {
 			game_bind_addr: SocketAddr::from_str("127.0.0.1:0").unwrap(),
-			admin_grpc_bind_addr: SocketAddr::from_str("127.0.0.1:0").unwrap(),
-			internal_grpc_bind_addr: SocketAddr::from_str("127.0.0.1:0").unwrap(),
+			admin_webgrpc_service_bind_address: SocketAddr::from_str("127.0.0.1:0").unwrap(),
+			internal_grpc_service_bind_address: SocketAddr::from_str("127.0.0.1:0").unwrap(),
+			internal_webgrpc_service_bind_address: SocketAddr::from_str("127.0.0.1:0").unwrap(),
 			is_agones_enabled: false,
 			plugin_names: FnvHashSet::default(),
 		}
@@ -49,20 +51,26 @@ pub enum ServerBuilderError {
 
 impl ServerBuilder {
 	#[must_use]
-	pub fn set_game_address(mut self, addr: SocketAddr) -> Self {
+	pub fn set_games_service_bind_address(mut self, addr: SocketAddr) -> Self {
 		self.game_bind_addr = addr;
 		self
 	}
 
 	#[must_use]
-	pub fn set_admin_grpc_address(mut self, addr: SocketAddr) -> Self {
-		self.admin_grpc_bind_addr = addr;
+	pub fn set_admin_webgrpc_service_bind_address(mut self, addr: SocketAddr) -> Self {
+		self.admin_webgrpc_service_bind_address = addr;
 		self
 	}
 
 	#[must_use]
-	pub fn set_internal_grpc_address(mut self, addr: SocketAddr) -> Self {
-		self.internal_grpc_bind_addr = addr;
+	pub fn set_internal_grpc_service_bind_address(mut self, addr: SocketAddr) -> Self {
+		self.internal_grpc_service_bind_address = addr;
+		self
+	}
+
+	#[must_use]
+	pub fn set_internal_webgrpc_service_bind_address(mut self, addr: SocketAddr) -> Self {
+		self.internal_webgrpc_service_bind_address = addr;
 		self
 	}
 
@@ -83,17 +91,24 @@ impl ServerBuilder {
 		let game_socket_addr = game_socket.local_addr().map_err(ServerBuilderError::ErrorGetLocalAddrFromUdpSocket)?;
 		let server_manager = RoomsServerManager::new(game_socket, self.plugin_names).map_err(ServerBuilderError::RoomsServerManager)?;
 		let manager = Arc::new(Mutex::new(server_manager));
-		let internal_grpc_bind_listener = TcpListener::bind(self.internal_grpc_bind_addr)
+
+		let internal_grpc_listener = TcpListener::bind(self.internal_grpc_service_bind_address)
 			.await
 			.map_err(ServerBuilderError::ErrorOpenGrpcSocket)?;
-		let admin_grpc_bind_listener = TcpListener::bind(self.admin_grpc_bind_addr)
+
+		let internal_webgrpc_listener = TcpListener::bind(self.internal_webgrpc_service_bind_address)
+			.await
+			.map_err(ServerBuilderError::ErrorOpenGrpcSocket)?;
+
+		let admin_webgrpc_listener = TcpListener::bind(self.admin_webgrpc_service_bind_address)
 			.await
 			.map_err(ServerBuilderError::ErrorOpenGrpcSocket)?;
 
 		Ok(Server {
 			game_socket_addr,
-			internal_grpc_tcp_listener: internal_grpc_bind_listener,
-			admin_grpc_tcp_listener: admin_grpc_bind_listener,
+			internal_webgrpc_listener,
+			internal_grpc_listener,
+			admin_webgrpc_listener,
 			is_agones_enabled: self.is_agones_enabled,
 			manager,
 		})

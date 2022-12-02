@@ -110,7 +110,7 @@ async fn notify_registry(gs: &GameServer, state: RelayState) -> Result<(), Regis
 		}),
 		grpc_internal: Some(Addr {
 			host: cheetah_libraries_microservice::get_env("POD_IP"),
-			port: u32::from(cheetah_libraries_microservice::get_internal_service_port()),
+			port: u32::from(cheetah_libraries_microservice::get_internal_grpc_service_default_port()),
 		}),
 	};
 

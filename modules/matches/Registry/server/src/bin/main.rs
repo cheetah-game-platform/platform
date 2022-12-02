@@ -31,7 +31,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 	Server::builder()
 		.add_service(health_service)
 		.add_service(grpc_service)
-		.serve(cheetah_libraries_microservice::get_internal_service_binding_addr())
+		.serve(cheetah_libraries_microservice::get_internal_grpc_service_default_address())
 		.await?;
 	Ok(())
 }

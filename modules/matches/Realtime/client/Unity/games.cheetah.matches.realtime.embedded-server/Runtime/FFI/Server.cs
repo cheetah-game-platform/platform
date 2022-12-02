@@ -11,12 +11,18 @@ namespace Cheetah.Matches.Realtime.EmbeddedServer.FFI
         internal struct Description
         {
             [MarshalAs(UnmanagedType.U8)] internal ulong id;
+
             internal unsafe fixed byte gameIp[4];
             [MarshalAs(UnmanagedType.U2)] internal ushort gamePort;
+
             internal unsafe fixed byte internal_grpc_ip[4];
             [MarshalAs(UnmanagedType.U2)] internal ushort internal_grpc_port;
-            internal unsafe fixed byte admin_grpc_ip[4];
-            [MarshalAs(UnmanagedType.U2)] internal ushort admin_grpc_port;
+
+            internal unsafe fixed byte internal_webgrpc_ip[4];
+            [MarshalAs(UnmanagedType.U2)] internal ushort internal_webgrpc_port;
+
+            internal unsafe fixed byte admin_webgrpc_ip[4];
+            [MarshalAs(UnmanagedType.U2)] internal ushort admin_webgrpc_port;
         }
 
         [StructLayout(LayoutKind.Sequential)]
